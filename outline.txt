@@ -1,0 +1,68 @@
+
+
+Introduction
+------------
+The following paragraphs specify a coding exercise that candidates for the S&P Java position should carry out at their leisure.  They should submit the results to S&P prior to an interview.
+
+Rules of Engagement
+-------------------
+The task we are asking you to perform is to code a java program against the specification and stories below.  It should take 2 or 3 hours.  The objective is to see how well you design and craft a simple java component.
+
+It’s not easy to assess, as a candidate, how to pitch your answer to this sort of exercise.  Do you go with what you would want to see or do you try to anticipate what you think the recruiter might be interested in?  Try to stick to the spec. as it makes life easy for us.  If there’s something you would do in production code but would take a disproportionate amount of time here then explain yourself in a comment. If you feel that the task is too trivial to show off your talents then feel free to include some alternative code along side the regular solution.
+
+Specification
+-------------
+Create a stock quote application wherein the user can request a stock through its ticker symbol and see its current price displayed.  The stock quote service is Yahoo’s and is detailed below.
+
+In addition to displaying the quote (average of bid and ask prices) to the user, your application should store the latest quote on a data store (so that, say, a risk department can compare quotes to some trade that may have been made by the user through some other system).  The risk department’s side of this mechanism is not part of your application or this exercise.
+
+The architecture team has not mandated for this exercise that the application use any particular technologies to display and store the stock information but they have pointed out that in the fullness of time we will be using Spring MVC and Hibernate with an appropriate RDBMS.
+
+For simplicity we have made this a single user system.
+
+User Stories
+------------
+The current sprint (i.e. what you have to code) comprises 2 user stories:
+
+S1 “As a trader I should like to be able to see the stock quote for a given ticker symbol so that I can buy and sell the relevant financial instrument at a good market price”.
+
+S1-Acceptance Criteria
+A1-1 “Type in a yahoo ticker symbol and within one second see the current price.  The current price should be approximately equal to that available from a Google search”
+
+A1-2 “Type in an invalid ticker symbol and within one second see an error message”
+
+
+S2 “As a risk analyst I should like to have available a repository of ticker symbols together with the latest price in each case as last viewed by the stock system’s user so that I can compare these to prices traded by the user on other systems.”
+
+S2-Acceptance Criteria
+A2-1 “From an empty data store, use the stock system to view MSFT and then RHT noting their current value.  Then query the data store to ensure those values have been recorded.”
+
+A2-2 “Wait till the Microsoft price has changed (a quarter of an hour during NY trading hours 2:30PM to 9:05PM UK time should be sufficient) and then requery MSFT noting the new price.  Then requery the data store to ensure that the value had been updated for MSFT and the RHT value is unchanged”.
+
+We do appreciate that in Agile terms the user story is merely a basis for interaction with the product owner and potential users.  Happily in this respect the test experience may echo real life in that the product owner in both cases can be hard to get hold of.  But if you are concerned that you are likely to take a wildly wrong path with the exercise then ask your recruitment agent to seek clarification from us.
+
+If you are new to the world of user stories you should note that the S1 and S2 paragraphs are what you are expected to code up.  The acceptance criteria are present to clarify and “ground” the story.  Typically they will be used as the basis of manual tests by developers and QA.  They are independent of any automated unit tests you may choose to include.
+
+Implementation
+--------------
+You will note that nothing has been stipulated about the form of display.  Our user and his or her colleagues in Risk are desperate and will take anything we give them so you can make it a web-page or a simple console app.  As long as the display is something like “MSFT: 24.50”.
+
+A Maven project is acceptable.
+
+Yahoo Stock Quote Service
+-------------------------
+Details of this can be found at http://benjisimon.blogspot.com/2009/01/truly-simple-stock-api.html
+
+You can exercise the API with this example (adapted from Ben’s blog): http://finance.yahoo.com/d/quotes.csv?s=MSFT&f=sb2b3
+
+The string returned is in the form:
+"MSFT",24.61,24.55
+
+Where the first value is the stock ticker symbol, the second value is the ask price and the third value is the bid price.  (When you’re selling a stock you’ll always ask more money for it than you’re prepared to pay when you’re bidding to buy it).
+
+The quote to be displayed to the user and stored in the data store is the mean of the ask and bid.  In the above case this would be 24.58 being (24.55 + (24.61-24.55) / 2 ).
+
+Proxy
+-----
+One wrinkle is that, for us, to test it in our environment, we need to be able to negotiate a proxy including authentication.  We will need to provide details of proxy server, port, user name and password.  This can either be at run-time or you can provide some mechanism for us to use at build time.  Please provide appropriate documentation on this.  The target production system will not need to deal with a proxy server.
+
