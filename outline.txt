@@ -1,15 +1,3 @@
-
-
-Introduction
-------------
-The following paragraphs specify a coding exercise that candidates for the S&P Java position should carry out at their leisure.  They should submit the results to S&P prior to an interview.
-
-Rules of Engagement
--------------------
-The task we are asking you to perform is to code a java program against the specification and stories below.  It should take 2 or 3 hours.  The objective is to see how well you design and craft a simple java component.
-
-It’s not easy to assess, as a candidate, how to pitch your answer to this sort of exercise.  Do you go with what you would want to see or do you try to anticipate what you think the recruiter might be interested in?  Try to stick to the spec. as it makes life easy for us.  If there’s something you would do in production code but would take a disproportionate amount of time here then explain yourself in a comment. If you feel that the task is too trivial to show off your talents then feel free to include some alternative code along side the regular solution.
-
 Specification
 -------------
 Create a stock quote application wherein the user can request a stock through its ticker symbol and see its current price displayed.  The stock quote service is Yahoo’s and is detailed below.
